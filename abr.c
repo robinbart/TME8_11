@@ -29,9 +29,15 @@ Lm_mot *part_Lmot(Lm_mot **pl)
 Nd_mot *Lm2abr(Lm_mot *l)
 {
   Nd_mot *nd;
-
-  /* A completer */
-
+  Lm_mot *p;
+  if(l==NULL)
+    return NULL;
+  md=malloc(sizeof(Nd_mot));
+  p= part_mot(&l);
+  nd->mot=p->mot;
+  nd->g=Lm2abr(l);
+  nd->d=Lm2abr(p->suivant);
+  free(p);
   return nd;
 }
 

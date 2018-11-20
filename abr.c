@@ -2,6 +2,7 @@
 #include <string.h>
 #include "liste.h"
 #include "abr.h"
+#include <stdio.h>
 
 /* decoupe liste */
 Lm_mot *part_Lmot(Lm_mot **pl)
@@ -32,29 +33,37 @@ Nd_mot *Lm2abr(Lm_mot *l)
   Lm_mot *p;
   if(l==NULL)
     return NULL;
-  md=malloc(sizeof(Nd_mot));
-  p= part_mot(&l);
+  nd=malloc(sizeof(Nd_mot));
+  p= part_Lmot(&l);
   nd->mot=p->mot;
   nd->g=Lm2abr(l);
-  nd->d=Lm2abr(p->suivant);
+  nd->d=Lm2abr(p->suiv);
   free(p);
   return nd;
 }
 
 
 /* destruction de l ABR donnee en argument */
-void detruire_abr_mot(Nd_mot *abr)
-{
-
-  /* A completer */
-
+void detruire_abr_mot(Nd_mot *abr){
+  if (abr == NULL){
+    return;
+  }
+  detruire_abr_mot(abr->g);
+  detruire_abr_mot(abr->d);
+  free(abr->mot);
+  free(abr);
 }
 
 
 /* Recherche d'un mot dans ABR */
 Nd_mot *chercher_Nd_mot(Nd_mot *abr, const char *mot)
 {
-  /* A completer */
-
+  if(abr == NULL){
+    printf("le mot que vous rechercher n'est pas present dans ce dictionnaire \n");
+    return NULL;
+  }
+  if(strcmp(mot, abr->mot)==0)return abr;
+  if(strcmp(mot, abr->mot)<0)return chercher_Nd_mot(abr->g,mot);
+  if(strcmp(mot, abr->mot)>0)return chercher_Nd_mot(abr->d, mot);
   return NULL;
 }

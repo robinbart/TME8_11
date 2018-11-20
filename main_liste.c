@@ -5,27 +5,25 @@
 int main(int argc, char **argv)
 {
 int i;
-lm_mot *pm1;
-lm_mot *pm2;
-ml_mot *l = lire_dico("french_za");
+Lm_mot *pm1;
+Lm_mot *pm2;
+Lm_mot *l = lire_dico_Lmot("french_za");
 char *mot1 ="arbre";
 char *mot2 = "moru";
 if(argc!=2){
   printf("Pb d'appel du programme \n");
   exit(1);
 }
-int nbz = atoi(argv[1]);
-for(i=0; i<nbz;i++){
-  pm1 = chercher_lm_mot(l, mot1);
-  pm2 = chercher_lm_mot(l, mot2);
+int nb2 = atoi(argv[1]);
+for(i=0; i<nb2;i++){
+  pm1 = chercher_Lm_mot(l, mot1);
+  pm2 = chercher_Lm_mot(l, mot2);
 }
 if((pm1!=NULL)&&(pm2!=NULL))
 printf("resultat correct");
 else
 printf("erreur !!!");
-detruire_lm_mot(l);
+detruire_Lmot(l);
 return 0;
   /* A completer */
-
-  return 0;
 }

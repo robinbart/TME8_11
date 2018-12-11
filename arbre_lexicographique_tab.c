@@ -8,6 +8,19 @@
 PNoeudTab creer_noeud(char lettre) {
     
   /* A completer */
+
+  PNoeudTab n = (PNoeudTab)malloc(sizeof(PNoeudTab));
+  if(n == NULL){
+    printf("pb d'alloc");
+    return NULL;
+  }
+  n->lettre = lettre;
+  n->fin_de_mot = mot_fin;
+  int i;
+  for(i=0;i<26;i++){
+    n->fils[i]=NULL;
+    return n;
+  }
   
   return NULL;
 }
@@ -15,8 +28,16 @@ PNoeudTab creer_noeud(char lettre) {
 PNoeudTab ajouter_mot(PNoeudTab racine, char *mot) {
   
   /* A completer */
-  
-  return NULL;
+
+  if(strlen(mot)==0){
+    racine -> fin_de_mot = fin;
+    return racine;
+  }
+  if(racine->fils[mot[0]-"a"]==NULL){
+    racine->fils[mot[0]-"a"]=creer_noeud(mot[0]);
+  }
+  racine -> fils[mot[0]-"a"]=ajouter_mot(racine->fils[mot[0]];
+  return racine;
 }
 
 void afficher_mots(PNoeudTab n, char mot_en_cours[LONGUEUR_MAX_MOT], int index) {
@@ -40,19 +61,41 @@ void afficher_mots(PNoeudTab n, char mot_en_cours[LONGUEUR_MAX_MOT], int index) 
 
 void afficher_dico(PNoeudTab racine) {
   
-  /* A completer */
-  
+
+char res[26]; 
+res[0]='\0';
+test(res, racine);
+}
+
+
+void test(char* res, PNoeudTab pn){
+  int i = 0;
+  while(res[i]=='\0'){
+    i+=1;
+  }
+  res[i]=pn.lettre;
+  res[i+1]='\0';
+
+
+  for(i=0;i<26;i++){
+    if(!pn->fils[i]==NULL){
+     test(res,pn->fils[i]);
+    }
+  }
+  if(pn.FDM = fin){
+    printf("%s",res);
+  }
 }
 
 void detruire_dico(PNoeudTab dico) {
   
-  /* A completer */
+  
   
 }
 
 int rechercher_mot(PNoeudTab dico, char *mot) {
-  
-  if(dico->fils[mot[0]-'a']==NULL){
+
+   if(dico->fils[mot[0]-'a']==NULL){
     return 0;
   }
   if(strlen(mot)==1){
@@ -61,11 +104,30 @@ int rechercher_mot(PNoeudTab dico, char *mot) {
   return rechercher_mot(dico->fils[mot[0]-'a'],mot+1);
   
 }
+  
 
 PNoeudTab lire_dico(const char *nom_fichier) {
   
   /* A completer */
   
+  File *f = fopen(nomfichier,"r");
+  if(f == NULL){
+    printf("probleme de lecture du fichier");
+    return NULL;
+  }
+  char ligne[LONGUEUR_MAX,f];
+  PNoeudTab dico = creer_noeud('.');
+  while(ligne!=NULL){
+    if(!fgets(ligne,LONGUEUR_MAX,f)){
+      break;
+    }
+    ligne[strlen(ligne)]-1='\0';
+    if(strlen(ligne)>=1){
+      dico=ajoute_mot(dico,ligne);
+    }
+  }
+  fclose();
+
    return NULL;
 }
 

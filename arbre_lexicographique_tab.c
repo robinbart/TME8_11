@@ -52,9 +52,14 @@ void detruire_dico(PNoeudTab dico) {
 
 int rechercher_mot(PNoeudTab dico, char *mot) {
   
-  /* A completer */
+  if(dico->fils[mot[0]-'a']==NULL){
+    return 0;
+  }
+  if(strlen(mot)==1){
+    return dico->fils[mot[0]-'a']->fin_de_mot==fin;
+  }
+  return rechercher_mot(dico->fils[mot[0]-'a'],mot+1);
   
-   return 0;
 }
 
 PNoeudTab lire_dico(const char *nom_fichier) {
